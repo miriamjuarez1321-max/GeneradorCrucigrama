@@ -689,45 +689,145 @@ $btnGenerar.addEventListener("click", function () {
 });
 ```
 
-                                                        El flujo general es:
-
-                                                        ```text
-                                                        Capturar palabras y descripciones
-                                                                    ↓
-                                                            Normalizar
-                                                                    ↓
-                                                            Validar datos
-                                                                    ↓
-                                                            Eliminar duplicados
-                                                                    ↓
-                                                        Ordenar las palabras
-                                                                    ↓
-                                                        Crear matriz de 25 × 25
-                                                                    ↓
-                                                        Colocar primera palabra
-                                                                    ↓
-                                                        Buscar cruces para las demás
-                                                                    ↓
-                                                        Validar posiciones
-                                                                    ↓
-                                                        Colocar palabras pendientes
-                                                                    ↓
-                                                        Repetir intentos
-                                                                    ↓
-                                                        Conservar el mejor resultado
-                                                                    ↓
-                                                            Numerar palabras
-                                                                    ↓
-                                                            Mostrar crucigrama
-                                                                    ↓
-                                                            Resolver palabras
-                                                                    ↓
-                                                        Comprobar respuestas
-                                                                    ↓
-                                                        Calcular aciertos y calificación
-                                                                    ↓
-                                                            Descargar HTML
-                                                        ```
+                           ┌─────────────┐
+                           │   INICIO    │
+                           └──────┬──────┘
+                                  ↓
+                 ┌──────────────────────────────┐
+                 │ Capturar palabras y          │
+                 │ descripciones                │
+                 └──────────────┬───────────────┘
+                                ↓
+                    ┌──────────────────────┐
+                    │ Normalizar palabras │
+                    │ (mayúsculas, Ñ,     │
+                    │ eliminar acentos)   │
+                    └──────────┬───────────┘
+                               ↓
+                    ┌──────────────────────┐
+                    │ ¿Datos válidos?      │
+                    └───────┬────────┬─────┘
+                         NO │        │ SÍ
+                            ↓        ↓
+                   ┌────────────┐  ┌────────────────────┐
+                   │ Mostrar    │  │ Eliminar palabras  │
+                   │ errores    │  │ duplicadas         │
+                   └─────┬──────┘  └──────────┬─────────┘
+                         ↓                     ↓
+                       FIN            ┌────────────────────┐
+                                      │ Ordenar palabras   │
+                                      │ por longitud       │
+                                      └──────────┬─────────┘
+                                                 ↓
+                                      ┌────────────────────┐
+                                      │ Crear matriz       │
+                                      │ de 25 × 25         │
+                                      └──────────┬─────────┘
+                                                 ↓
+                                      ┌────────────────────┐
+                                      │ Colocar primera    │
+                                      │ palabra al centro  │
+                                      └──────────┬─────────┘
+                                                 ↓
+                                      ┌────────────────────┐
+                                      │ Crear lista de     │
+                                      │ palabras pendientes│
+                                      └──────────┬─────────┘
+                                                 ↓
+                                      ┌────────────────────┐
+                                      │ Buscar posiciones  │
+                                      │ con cruces         │
+                                      └──────────┬─────────┘
+                                                 ↓
+                                      ┌────────────────────┐
+                                      │ ¿Existe posición   │
+                                      │ válida?            │
+                                      └───────┬──────┬─────┘
+                                           NO│      │SÍ
+                                             ↓      ↓
+                              ┌──────────────────┐  ┌──────────────────┐
+                              │ Buscar posición  │  │ Seleccionar una │
+                              │ sin cruce        │  │ de las mejores  │
+                              └────────┬─────────┘  └────────┬─────────┘
+                                       ↓                     ↓
+                              ┌────────────────────────────────────┐
+                              │ ¿Existe una posición disponible?   │
+                              └───────────────┬──────────────┬─────┘
+                                           NO│              │SÍ
+                                             ↓              ↓
+                                      ┌────────────┐  ┌────────────────┐
+                                      │ Mantener   │  │ Colocar palabra│
+                                      │ pendiente  │  │ en la matriz    │
+                                      └─────┬──────┘  └───────┬────────┘
+                                            │                 │
+                                            └────────┬────────┘
+                                                     ↓
+                                      ┌──────────────────────────┐
+                                      │ ¿Quedan palabras         │
+                                      │ pendientes?              │
+                                      └───────────┬────────┬─────┘
+                                               SÍ│        │NO
+                                                 ↓        ↓
+                                      ┌────────────────┐  │
+                                      │ Repetir hasta  │  │
+                                      │ 10 pasadas     │  │
+                                      └───────┬────────┘  │
+                                              │           │
+                                              └─────┐     │
+                                                    ↓     ↓
+                                      ┌──────────────────────────┐
+                                      │ ¿Se realizaron 5 intentos│
+                                      │ de generación?           │
+                                      └───────────┬────────┬─────┘
+                                               NO│        │SÍ
+                                                 ↓        ↓
+                                      ┌────────────────┐  │
+                                      │ Generar nuevo  │  │
+                                      │ intento        │  │
+                                      └───────┬────────┘  │
+                                              │           │
+                                              └─────┐     │
+                                                    ↓     ↓
+                                      ┌──────────────────────────┐
+                                      │ Conservar el intento con │
+                                      │ más palabras colocadas  │
+                                      └────────────┬─────────────┘
+                                                   ↓
+                                      ┌──────────────────────────┐
+                                      │ Numerar las palabras     │
+                                      └────────────┬─────────────┘
+                                                   ↓
+                                      ┌──────────────────────────┐
+                                      │ Calcular límites visibles│
+                                      └────────────┬─────────────┘
+                                                   ↓
+                                      ┌──────────────────────────┐
+                                      │ Mostrar crucigrama y     │
+                                      │ pistas                   │
+                                      └────────────┬─────────────┘
+                                                   ↓
+                                      ┌──────────────────────────┐
+                                      │ Usuario resuelve         │
+                                      │ el crucigrama             │
+                                      └────────────┬─────────────┘
+                                                   ↓
+                                      ┌──────────────────────────┐
+                                      │ Comprobar respuestas     │
+                                      └────────────┬─────────────┘
+                                                   ↓
+                                      ┌──────────────────────────┐
+                                      │ Calcular aciertos,       │
+                                      │ errores y calificación   │
+                                      └────────────┬─────────────┘
+                                                   ↓
+                                      ┌──────────────────────────┐
+                                      │ Descargar crucigrama    │
+                                      │ HTML o solución          │
+                                      └────────────┬─────────────┘
+                                                   ↓
+                                             ┌─────────┐
+                                             │   FIN   │
+                                             └─────────┘
 
 ### Paso 29. Resultado final del algoritmo
 
