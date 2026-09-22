@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crea tu rucigrama</title>
+
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <h1>Crea tu propio crucigrama :) </h1>
+
+        <p class="descripcion">
+            Captura las palabras y sus descripciones para generar
+            un crucigrama automaticamente.
+        </p>
+
+        <div class="formulario-palabra">
+
+            <h3>Agregar palabra</h3>
+
+            <div class="fila-formulario">
+
+                <div class="grupo-formulario">
+                    <label>Palabra:</label>
+                    <input
+                        type="text"
+                        id="nuevaPalabra"
+                        class="entrada-palabra-unica"
+                        placeholder="Ejemplo: ALGORITMO"
+                    >
+                </div>
+
+                <div class="grupo-formulario">
+                    <label>Descripcion:</label>
+                    <input
+                        type="text"
+                        id="nuevaDescripcion"
+                        class="entrada-descripcion-unica"
+                        placeholder="Ejemplo: Conjunto de pasos para resolver un problema"
+                    >
+                </div>
+
+                <div class="grupo-boton-formulario">
+                    <button id="botonAgregarFormulario" class="boton-agregar-chico">
+                        + Agregar
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="listaPalabrasAgregadas">
+
+            <h3>Palabras agregadas <span id="contadorPalabras">(0)</span></h3>
+
+            <div id="contenedorPalabras">
+                <p class="lista-vacia">Aun no has agregado ninguna palabra.</p>
+            </div>
+
+        </div>
+
+        <div class="botones">
+
+            <button id="generarCrucigrama">
+                Generar crucigrama
+            </button>
+
+        </div>
+
+        <div id="mensajesValidacion"></div>
+
+        <div id="resultado"></div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

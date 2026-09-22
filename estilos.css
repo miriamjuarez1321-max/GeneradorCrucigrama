@@ -1,0 +1,445 @@
+/* ==========================================
+   GENERADOR DE CRUCIGRAMAS — ESTILOS
+   ========================================== */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+h1 { text-align: center; margin-bottom: 10px; }
+
+h2 { margin-bottom: 20px; }
+
+h3 { margin-top: 20px; margin-bottom: 10px; }
+
+.contenedor {
+    width: 95%;
+    max-width: 1100px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.descripcion {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+/* ==========================================
+   FORMULARIO DE AGREGAR PALABRA
+   ========================================== */
+
+.formulario-palabra {
+    margin-bottom: 25px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.formulario-palabra h3,
+#listaPalabrasAgregadas h3 {
+    margin-bottom: 15px;
+}
+
+.fila-formulario {
+    display: grid;
+    grid-template-columns: 1fr 2fr auto;
+    gap: 15px;
+    align-items: end;
+}
+
+.grupo-formulario label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+/* Todos los inputs (incluye los del antiguo sistema) */
+input,
+.entrada-palabra-unica,
+.entrada-descripcion-unica {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+/* ==========================================
+   BOTONES
+   ========================================== */
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+button:hover { opacity: 0.85; }
+
+.botones {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.boton-agregar-chico {
+    background: #333;
+    color: white;
+    padding: 10px 18px;
+    font-size: 14px;
+}
+
+#generarCrucigrama {
+    background: #333;
+    color: white;
+}
+
+.boton-descargar { background: #1e88e5; color: white; }
+.boton-solucion  { background: #8e24aa; color: white; }
+.boton-regenerar { background: #43a047; color: white; }
+.boton-comprobar { background: #333;     color: white; }
+
+.botones-crucigrama {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.botones-crucigrama button { min-width: 180px; }
+
+/* ==========================================
+   LISTA DE PALABRAS AGREGADAS
+   ========================================== */
+
+#listaPalabrasAgregadas { margin-bottom: 10px; }
+
+#contadorPalabras {
+    color: #666;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.lista-vacia {
+    color: #888;
+    text-align: center;
+    padding: 15px;
+    border: 1px dashed #ccc;
+    border-radius: 6px;
+    background: #fafafa;
+}
+
+.tarjeta-palabra {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.tarjeta-palabra:hover {
+    border-color: #bbb;
+    background: #fafafa;
+}
+
+.tarjeta-palabra-titulo {
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 4px;
+    color: #1a1a1a;
+}
+
+.tarjeta-palabra-descripcion {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.4;
+}
+
+.boton-eliminar-chico {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.boton-eliminar-chico:hover { background: #f5c6cb; }
+
+/* ==========================================
+   RESULTADO / CRUCIGRAMA
+   ========================================== */
+
+#resultado { margin-top: 40px; }
+
+.crucigrama { text-align: center; }
+
+/* CUADRÍCULA — las columnas/filas se definen inline con style= para
+   que el recorte dinámico siga funcionando (antes esto se ignoraba por
+   el CSS con repeat(25...). Ahora el style inline sí gana. */
+.cuadricula {
+    display: grid;
+    justify-content: center;
+    margin: 20px auto;
+    border: 2px solid #222;
+    width: max-content;
+}
+
+.celda {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #888;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+}
+
+.celda.vacia    { background: #222; border-color: #222; }
+.celda.jugable  { background: white; }
+
+.numero {
+    position: absolute;
+    top: 1px; left: 2px;
+    font-size: 9px;
+    font-weight: bold;
+    line-height: 9px;
+}
+
+.entrada-celda {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    padding: 8px 2px 0 2px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    background: transparent;
+    text-transform: uppercase;
+    outline: none;
+}
+
+.entrada-celda:focus {
+    outline: 2px solid #333;
+    z-index: 2;
+}
+
+.entrada-celda.correcta   { background: #d4edda; }
+.entrada-celda.incorrecta { background: #f8d7da; }
+
+/* ===== PISTA ACTUAL (al seleccionar casilla) ===== */
+.pista-actual {
+    margin: 10px auto 20px auto;
+    max-width: 600px;
+    text-align: left;
+    padding: 12px 16px;
+    background: #fff9db;
+    border: 1px solid #ffd43b;
+    border-radius: 6px;
+}
+.pista-actual-num {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #5c4a00;
+}
+.pista-actual-texto {
+    font-size: 15px;
+    color: #222;
+}
+
+/* ===== RESALTADO DE PALABRA SELECCIONADA ===== */
+.celda-seleccionada {
+    background: #fff3bf !important;
+}
+.entrada-celda.celda-letra-seleccionada {
+    background: #ffec99 !important;
+}
+
+/* ===== MODAL TIPO ECLIPSECROSSWORD (AHORA PANEL LATERAL DERECHO) ===== */
+.modal-eclipse {
+    display: block;
+    width: 100%;
+}
+.modal-eclipse-contenido {
+    background: #fffbea;
+    border: 1px solid #b9922a;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 460px;
+    padding: 18px 22px;
+    border-radius: 4px;
+    margin: 0;
+}
+.modal-eclipse-patron {
+    font-family: "Courier New", monospace;
+    background: white;
+    border: 1px solid #999;
+    padding: 8px 12px;
+    letter-spacing: 2px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    display: inline-block;
+    color: #222;
+}
+.modal-eclipse-meta {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 10px;
+}
+.modal-eclipse-pista {
+    font-size: 15px;
+    color: #222;
+    padding: 10px 0;
+    border-top: 1px solid #e0d0a0;
+    border-bottom: 1px solid #e0d0a0;
+    margin-bottom: 14px;
+    line-height: 1.5;
+}
+.modal-eclipse-input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 16px;
+    border: 1px solid #999;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    box-sizing: border-box;
+}
+.modal-eclipse-error {
+    color: #721c24;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 8px 12px;
+    font-size: 13px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+}
+.modal-eclipse-botones {
+    text-align: right;
+    margin-top: 10px;
+}
+.modal-eclipse-botones button {
+    padding: 8px 18px;
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #888;
+    border-radius: 4px;
+    background: #f2f2f2;
+}
+.modal-eclipse-botones button:hover { opacity: 0.85; }
+.modal-eclipse-botones .modal-aceptar {
+    background: #333;
+    color: white;
+    border-color: #000;
+}
+
+/* ==========================================
+   PISTAS
+   ========================================== */
+
+.informacion-crucigrama {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.informacion-crucigrama h2 { margin-bottom: 15px; }
+.informacion-crucigrama ol { padding-left: 30px; }
+.informacion-crucigrama li { margin-bottom: 10px; }
+
+/* ==========================================
+   COMPROBACIÓN Y RESULTADOS
+   ========================================== */
+
+.zona-comprobacion {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.resultado-calificacion { margin-top: 20px; }
+
+.mensaje-exito {
+    padding: 20px;
+    border-radius: 8px;
+    background: #d4edda;
+    border: 1px solid #a3cfbb;
+}
+
+.mensaje-incompleto {
+    padding: 20px;
+    border-radius: 8px;
+    background: #fff3cd;
+    border: 1px solid #ffe69c;
+}
+
+.advertencia {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background: #fff3cd;
+    border: 1px solid #ffe69c;
+}
+
+/* ==========================================
+   VALIDACIÓN
+   ========================================== */
+
+.error-validacion {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.error-validacion ul { margin-top: 10px; padding-left: 25px; }
+.error-validacion li { margin-bottom: 5px; }
+
+/* ==========================================
+   ESTILOS LEGADOS (no se usan ya pero se dejan
+   para no romper nada en caso de referencia antigua)
+   ========================================== */
+
+.boton-eliminar {
+    background: #e53935;
+    color: white;
+    padding: 8px 14px;
+    font-size: 13px;
+    margin-top: 10px;
+    grid-column: 1 / -1;
+}
+
+#agregarPalabra { background: #ddd; }
